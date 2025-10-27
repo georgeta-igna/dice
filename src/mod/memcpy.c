@@ -14,6 +14,7 @@ INTERPOSE(void *, memcpy, void *dest ,const void *src ,size_t num)
         .dest = dest,
         .src  = src,
         .num  = num,
+        .ret  = 0,
     };
 
     metadata_t md = {0};
@@ -30,6 +31,7 @@ INTERPOSE(void *, memmove, void *dest ,const void *src ,size_t count)
         .dest = dest,
         .src  = src,
         .count  = count,
+        .ret  = 0,
     };
 
     metadata_t md = {0};
@@ -46,6 +48,7 @@ INTERPOSE(void *, memset, void *ptr ,int value, size_t num)
         .ptr = ptr,
         .value = value,
         .num = num,
+        .ret  = 0,
     };
 
     metadata_t md = {0};

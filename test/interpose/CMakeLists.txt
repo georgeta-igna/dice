@@ -6,7 +6,7 @@ set(INTERPOSED_IN ${CMAKE_CURRENT_SOURCE_DIR}/interposed.h.in)
 set(FUNS_malloc malloc calloc realloc free posix_memalign aligned_alloc)
 set(INCL_malloc '<dice/events/malloc.h>')
 
-set(FUNS_memcpy memcpy)
+set(FUNS_memcpy memcpy memmove memset)
 set(INCL_memcpy '<dice/events/memcpy.h>')
 
 set(FUNS_mman mmap munmap)
@@ -81,7 +81,7 @@ foreach(MOD ${MODS})
   add_test(NAME ${TARGET} COMMAND ${TARGET})
   target_link_libraries(${TARGET} PRIVATE dice.h dice.o tsano pthread)
   target_link_libraries(${TARGET} PRIVATE dice-${MOD}_testing.o)
-  add_dependencies(${TARGET} ${MOD}-expand)
+  # add_dependencies(${TARGET} ${MOD}-expand)
 
   if(${ENABLE_SANITIZER})
     target_compile_options(${TARGET} PRIVATE ${LIBSAN_C_FLAGS})
@@ -90,9 +90,7 @@ foreach(MOD ${MODS})
   endif()
 endforeach()
 
-# Add the test executable
+# Add the test executable for memcpy
 add_executable(memcpy_test ${CMAKE_CURRENT_SOURCE_DIR}/memcpy_test.c)
-
-# Link any required libraries (optional)
 target_link_libraries(memcpy_test PRIVATE dice.o tsano pthread)
 add_test(NAME memcpy_test COMMAND memcpy_test)
